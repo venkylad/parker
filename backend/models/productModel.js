@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema(
   {
@@ -8,20 +8,20 @@ const reviewSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: "User",
     },
   },
   {
     timestamps: true,
   }
-)
+);
 
 const productSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: "User",
     },
     name: {
       type: String,
@@ -64,12 +64,21 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
+    filter: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   }
-)
+);
 
-const Product = mongoose.model('Product', productSchema)
+const Product = mongoose.model("Product", productSchema);
 
-export default Product
+module.exports = Product;
