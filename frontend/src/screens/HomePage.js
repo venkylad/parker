@@ -13,8 +13,10 @@ import {
 import L from "leaflet";
 import { freeParkings, noParkings } from "../data/parkingData";
 import introImage from "../markers/homePage1.png";
+import introMapImage from "../markers/introMapImage.png";
 import noParkingImage from "../markers/homePage2.png";
 import creditCardImage from "../markers/homePage3.png";
+import maps from "../markers/towtruck2.png";
 import CurrentLoc from "../components/CurrentLoc";
 
 const HomePage = ({ match }) => {
@@ -28,22 +30,22 @@ const HomePage = ({ match }) => {
   const { loading, error, products, page, pages } = productList;
 
   const markerIcon = new L.Icon({
-    iconUrl: require("../markers/marking.jpg"),
-    iconSize: [30, 45],
+    iconUrl: require("../markers/publicparking.png"),
+    iconSize: [55, 55],
     iconAnchor: [17, 45],
     popupAnchor: [4, -46],
   });
 
   const freeParkingIcon = new L.Icon({
-    iconUrl: require("../markers/freeParking.png"),
-    iconSize: [35, 45],
+    iconUrl: require("../markers/parking.png"),
+    iconSize: [35, 35],
     iconAnchor: [17, 45],
     popupAnchor: [4, -46],
   });
 
   const noParkingIcon = new L.Icon({
-    iconUrl: require("../markers/no-parking.png"),
-    iconSize: [35, 45],
+    iconUrl: require("../markers/noParking.png"),
+    iconSize: [35, 35],
     iconAnchor: [17, 45],
     popupAnchor: [4, -46],
   });
@@ -52,33 +54,32 @@ const HomePage = ({ match }) => {
     dispatch(listProducts(keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
 
-  console.log(products);
-
   return (
     <>
       <Row className="homepage_row">
-        <Col xs={12} sm={4} className="homepage_text_col">
+        <Col xs={12} sm={9} className="homepage_text_col">
           <div className="homepage_text">
-            <h1>Welcome parker !</h1>
-            <blockquote class="blockquote">
-              <p className="mb-0">
-                I'm a very firm <i>Believer</i> in karma and put in this way. I
-                get a lot of good parking spots
-              </p>
-              <footer className="blockquote-footer">
-                <cite title="Source Title">AI Jourgensen</cite>
-              </footer>
-            </blockquote>
+            <h1 className="homepage_intro_text">Welcome parker !</h1>
+            <h2 className="homepage_intro_subtext">
+              Be a very firm believer in Karma and put in this way. you will get
+              a lot of good parking spots
+            </h2>
           </div>
         </Col>
-        <Col xs={12} sm={8} className="homepage_img_col">
-          <img className="homepage_images" src={introImage} alt="intro_image" />
+        <Col xs={12} sm={3}></Col>
+      </Row>
+
+      <Row className="homepage_row">
+        <Col xs={12} sm={3}></Col>
+        <Col xs={12} sm={9} className="homepage_text_col">
+          <div className="homepage_text">
+            <h3>
+              Search Parker's safe parkings & Free-parkings nearby your location
+            </h3>
+          </div>
         </Col>
       </Row>
-      <hr />
-      <p>****Know Your Location just By Tapping on Map****</p>
-      <p>****Tap on Markers to know details****</p>
-      <hr />
+
       <Row>
         <Col sm={12} md={12}>
           <div>
@@ -111,7 +112,17 @@ const HomePage = ({ match }) => {
                   key={i}
                   icon={freeParkingIcon}
                 >
-                  <Popup>Free Parking</Popup>
+                  <Popup>
+                    Free Parking
+                    <br />
+                    <a
+                      target="_blank"
+                      className="btn btn-info p-1"
+                      href={`http://maps.google.com/?q=${park.lat},${park.lng}`}
+                    >
+                      Directions
+                    </a>
+                  </Popup>
                 </Marker>
               ))}
               {noParkings.map((park, i) => (
@@ -124,49 +135,6 @@ const HomePage = ({ match }) => {
                 </Marker>
               ))}
             </MapContainer>
-          </div>
-        </Col>
-      </Row>
-      <hr />
-      <Row className="homepage_row">
-        <Col xs={12} sm={6} className="homepage_img_col">
-          <img
-            className="homepage_images"
-            src={noParkingImage}
-            alt="noparking_image"
-          />
-        </Col>
-        <Col xs={12} sm={6} className="homepage_text_col">
-          <div className="homepage_text">
-            <h2>We Know, how difficult is to find parking in Urban</h2>
-            <blockquote class="blockquote">
-              <p className="mb-0">
-                Don't Risk yourself just by parking your vehicle anywhere.{" "}
-                <br /> Use Parker's safe-parks to park your and rent garages for
-                sufficient number of hours
-              </p>
-            </blockquote>
-          </div>
-        </Col>
-      </Row>
-      <hr />
-      <Row className="homepage_row">
-        <Col xs={12} sm={6} className="homepage_img_col">
-          <img
-            className="homepage_images"
-            src={creditCardImage}
-            alt="noparking_image"
-          />
-        </Col>
-        <Col xs={12} sm={6} className="homepage_text_col">
-          <div className="homepage_text">
-            <h2>Don't worry about payment</h2>
-            <blockquote class="blockquote">
-              <p className="mb-0">
-                Being a Parker we enable ypu to pay using Credit or Debit Cards,
-                or by using paypal and UPI
-              </p>
-            </blockquote>
           </div>
         </Col>
       </Row>

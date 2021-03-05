@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
-import logo from "../markers/logo-2.jpg";
+import logo from "../markers/publicparking.png";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,28 +13,39 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const logoutHandler = () => {
     dispatch(logout());
   };
 
+  console.log(user);
+
   return (
     <header>
-      <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
-        <Container>
+      <Navbar variant="light" expand="lg" collapseOnSelect className="navbar">
+        <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand>
               <div className="logo_div">
-                <h3 bg="light">
-                  <i>Parker</i>
-                </h3>
-                <img width="30px" className="logo" src={logo} alt="logo" />
+                <img width="70px" className="logo" src={logo} alt="logo" />
               </div>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Route render={({ history }) => <SearchBox history={history} />} />
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history} className="search_box" />
+              )}
+            />
             <Nav className="ml-auto">
+              <LinkContainer to="/maps">
+                <Nav.Link>
+                  <i className="fas fa-map-marker"></i> Use-Map
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/products">
                 <Nav.Link>
                   <i className="fas fa-car"></i> Parkings
@@ -61,11 +72,13 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {userInfo && userInfo.isAdmin && (
+              {userInfo && user && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
+                  {userInfo.isProvider && (
+                    <LinkContainer to="/admin/userlist">
+                      <NavDropdown.Item>Users</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
                   <LinkContainer to="/admin/productlist">
                     <NavDropdown.Item>Parks / Add Parks</NavDropdown.Item>
                   </LinkContainer>

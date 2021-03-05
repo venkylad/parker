@@ -20,6 +20,9 @@ const ProductListScreen = ({ history, match }) => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const productDelete = useSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
@@ -37,6 +40,11 @@ const ProductListScreen = ({ history, match }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const providerProducts =
+    products && products.filter((product) => product.user === userInfo._id);
+
+  console.log(providerProducts);
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
@@ -58,6 +66,7 @@ const ProductListScreen = ({ history, match }) => {
     successCreate,
     createdProduct,
     pageNumber,
+    user,
   ]);
 
   const deleteHandler = (id) => {
@@ -101,10 +110,14 @@ const ProductListScreen = ({ history, match }) => {
                 <th>ADDRESS-2</th>
                 <th>PROVIDER</th>
                 <th></th>
+                {/* <th>BOOKED BY</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th></th> */}
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {providerProducts.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>

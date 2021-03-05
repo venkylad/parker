@@ -5,7 +5,7 @@ import Rating from "./Rating";
 
 const Product = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded product_card">
+    <Card className="my-3 rounded product_card">
       {product.filter ? (
         <span
           style={{
@@ -27,7 +27,7 @@ const Product = ({ product }) => {
 
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
+          <Card.Title as="div" className="product_card_title">
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>

@@ -79,7 +79,7 @@ const ProductScreen = ({ history, match }) => {
         <>
           {/* <Meta title={product.name} /> */}
           <Row>
-            <Col md={6}>
+            <Col md={6} className="list_item">
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   {product.filter ? (
@@ -157,7 +157,7 @@ const ProductScreen = ({ history, match }) => {
                   <ListGroup.Item>
                     <Button
                       onClick={addToCartHandler}
-                      className="btn-block"
+                      className="btn-block btn-dark common_btn"
                       type="button"
                       disabled={product.countInStock === 0}
                     >
@@ -184,7 +184,12 @@ const ProductScreen = ({ history, match }) => {
               ) : (
                 ""
               )}
-              <Image src={product.image} alt={product.name} fluid />
+              <Image
+                src={product.image}
+                alt={product.name}
+                fluid
+                className="product_image"
+              />
               <Button
                 className="btn btn-light btn-lg btn-block"
                 target="_blank"

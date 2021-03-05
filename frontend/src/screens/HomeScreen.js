@@ -8,10 +8,7 @@ import Loader from "../components/Loader";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
 import { listProducts } from "../actions/productActions";
-import popular from "../markers/popular.jpg";
-import goodPrice from "../markers/goodPrice.jpg";
-import budget from "../markers/budget.jpg";
-import introImage from "../markers/towtruck2.png";
+import introImage from "../markers/cash.png";
 
 const HomeScreen = ({ match }) => {
   const [type, setType] = useState("popular");
@@ -42,27 +39,21 @@ const HomeScreen = ({ match }) => {
   return (
     <>
       <Row className="homepage_row">
-        <Col xs={12} sm={4} className="homepage_text_col">
-          <div className="homescreen_text">
-            <h1>Save</h1>
-            <blockquote class="blockquote">
-              <p className="mb-0">
-                Save Yourself from Challans and Towing
-                <br /> Parker helps you and save you car and money from getting
-                wasted
-              </p>
-              <footer className="blockquote-footer">
-                <cite title="Source Title">AI Jourgensen</cite>
-              </footer>
-            </blockquote>
+        <Col xs={12} sm={9} className="homepage_text_col">
+          <div className="homepage_intro_text">
+            <h1>Budget Friendly.</h1>
+            <p className="homepage_intro_subtext">
+              Filter Available Parker's safe-parking depending on your budget
+              and area
+            </p>
           </div>
         </Col>
-        <Col xs={12} sm={8} className="homepage_img_col">
-          <img className="homepage_images" src={introImage} alt="intro_image" />
-        </Col>
+        <Col xs={12} sm={3}></Col>
       </Row>
       {!keyword ? (
-        <h1>Need Parking? Filter them out</h1>
+        <h2 className="filter_text">
+          Need Parking in your budget? Filter them out
+        </h2>
       ) : (
         <Link to="/" className="btn btn-light mb-4">
           Go Back
@@ -76,83 +67,53 @@ const HomeScreen = ({ match }) => {
       ) : (
         <>
           <Row>
-            <Col xs={6} sm={4}>
-              <Card
-                className={
-                  type === "popular" ? "category_tab_selected" : "category_tab"
-                }
-              >
-                <img
-                  className="category_tab_img"
+            <div className="filter_btn_container">
+              <Col xs={4} sm={4}>
+                <Button
+                  className={
+                    type === "popular"
+                      ? "btn btn-lg btn-success p-3"
+                      : "btn btn-lg btn-dark"
+                  }
                   onClick={() => {
                     selectType("popular");
                   }}
-                  src={popular}
-                  alt="popular"
-                />
-                <Card.Title
-                  onClick={() => {
-                    selectType("popular");
-                  }}
-                  className="category_tab_text"
                 >
-                  Popular
-                </Card.Title>
-              </Card>
-            </Col>
-            <Col xs={6} sm={4}>
-              <Card
-                className={
-                  type === "goodPrice"
-                    ? "category_tab_selected"
-                    : "category_tab"
-                }
-              >
-                <img
-                  className="category_tab_img"
+                  POPULAR
+                </Button>
+              </Col>
+              <Col xs={4} sm={4}>
+                <Button
+                  className={
+                    type === "goodPrice"
+                      ? "btn btn-lg btn-success p-3"
+                      : "btn btn-lg btn-dark"
+                  }
                   onClick={() => {
                     selectType("goodPrice");
                   }}
-                  src={goodPrice}
-                  alt="goodPrice"
-                />
-                <Card.Title
-                  onClick={() => {
-                    selectType("goodPrice");
-                  }}
-                  className="category_tab_text"
                 >
-                  Good Price
-                </Card.Title>
-              </Card>
-            </Col>
-            <Col xs={12} sm={4}>
-              <Card
-                className={
-                  type === "budget" ? "category_tab_selected" : "category_tab"
-                }
-              >
-                <img
-                  className="category_tab_img"
+                  GOOD PRICE
+                </Button>
+              </Col>
+              <Col xs={4} sm={4}>
+                <Button
+                  className={
+                    type === "budget"
+                      ? "btn btn-lg btn-success p-3"
+                      : "btn btn-lg btn-dark"
+                  }
                   onClick={() => {
                     selectType("budget");
                   }}
-                  src={budget}
-                  alt="budget"
-                />
-                <Card.Title
-                  onClick={() => {
-                    selectType("budget");
-                  }}
-                  className="category_tab_text"
                 >
-                  Budget
-                </Card.Title>
-              </Card>
-            </Col>
+                  BUDGET
+                </Button>
+              </Col>
+            </div>
           </Row>
           <hr />
-          <Row>
+          <Row className="mb-4">
             {products
               .filter((cat) => cat.filter === type)
               .map((product) => (
