@@ -12,6 +12,7 @@ import profileBackground from "../markers/profileBackground.png";
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
@@ -41,6 +42,7 @@ const ProfileScreen = ({ location, history }) => {
       } else {
         setName(user.name);
         setEmail(user.email);
+        setPhone(user.phone);
       }
     }
   }, [dispatch, history, userInfo, user, success]);
@@ -50,138 +52,138 @@ const ProfileScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      dispatch(
+        updateUserProfile({ id: user._id, name, email, password, phone })
+      );
     }
   };
 
   return (
     <Row>
-      <Col md={6} className="d-none d-lg-block login_left_side">
-        <img
-          src={profileBackground}
-          alt="signInBackgroundImage"
-          className="login_image"
-        />
-        <h1>Your Profile Page</h1>
+      <Col md={5} className="m-4 login_form_container">
+        <h2>Your Profile</h2>
+        {message && <Message variant="danger">{message}</Message>}
+        {}
+        {success && <Message variant="success">Profile Updated</Message>}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="number">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Button type="submit" variant="primary">
+              Update
+            </Button>
+          </Form>
+        )}
       </Col>
-      <Col sm={12} md={12} lg={6} className="login_right_side">
-        <Row>
-          <Col md={12} className="profile_col">
-            <h2>User Profile</h2>
-            {message && <Message variant="danger">{message}</Message>}
-            {}
-            {success && <Message variant="success">Profile Updated</Message>}
-            {loading ? (
-              <Loader />
-            ) : error ? (
-              <Message variant="danger">{error}</Message>
-            ) : (
-              <Form onSubmit={submitHandler}>
-                <Form.Group controlId="name">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="name"
-                    placeholder="Enter name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="password">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="confirmPassword">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Confirm password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-
-                <Button type="submit" variant="primary">
-                  Update
-                </Button>
-              </Form>
-            )}
-          </Col>
-          <hr />
-          <Col md={12}>
-            <h2 className="py-4">Your Orders</h2>
-            {loadingOrders ? (
-              <Loader />
-            ) : errorOrders ? (
-              <Message variant="danger">{errorOrders}</Message>
-            ) : (
-              <Table striped bordered hover responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>DELIVERED</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order._id}>
-                      <td>{order._id}</td>
-                      <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>{order.totalPrice}</td>
-                      <td>
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        {order.isDelivered ? (
-                          order.deliveredAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/order/${order._id}`}>
-                          <Button className="btn-sm" variant="light">
-                            Details
-                          </Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            )}
-          </Col>
-        </Row>
+      <hr />
+      <Col md={6}>
+        <h2 className="mr-2 py-4">Your Orders</h2>
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
+          <Message variant="danger">{errorOrders}</Message>
+        ) : (
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className="table-md table-dark"
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>RECEIVED</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: "red" }}></i>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      order.deliveredAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: "red" }}></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Col>
     </Row>
   );

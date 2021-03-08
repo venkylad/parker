@@ -11,6 +11,7 @@ import {
   createProduct,
 } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { listOrders } from "../actions/orderActions";
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
@@ -22,6 +23,13 @@ const ProductListScreen = ({ history, match }) => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
+
+  // for implementing orders
+
+  const orderList = useSelector((state) => state.orderList);
+  const { orders } = orderList;
+
+  // till here
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -44,10 +52,16 @@ const ProductListScreen = ({ history, match }) => {
   const providerProducts =
     products && products.filter((product) => product.user === userInfo._id);
 
-  console.log(providerProducts);
-
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
+
+    // //for implementing orders
+    // if (userInfo && userInfo.isAdmin) {
+    //   dispatch(listOrders());
+    // } else {
+    //   history.push("/login");
+    // }
+    // //till here
 
     if (!userInfo || !userInfo.isAdmin) {
       history.push("/login");
@@ -79,6 +93,13 @@ const ProductListScreen = ({ history, match }) => {
     dispatch(createProduct());
   };
 
+  // //trail and error
+  // const ord =
+  //   orders && orders.map((order) => order.orderItems.map((pro) => pro.product));
+  // const prod = [...providerProducts, ord];
+  // console.log(...prod);
+  // //till here
+
   return (
     <>
       <Row className="align-items-center">
@@ -101,7 +122,13 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className="table-sm">
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className="table-md table-dark"
+          >
             <thead>
               <tr>
                 <th>ID</th>
@@ -110,20 +137,17 @@ const ProductListScreen = ({ history, match }) => {
                 <th>ADDRESS-2</th>
                 <th>PROVIDER</th>
                 <th></th>
-                {/* <th>BOOKED BY</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th></th> */}
               </tr>
             </thead>
             <tbody>
-              {providerProducts.map((product) => (
+              {providerProducts.map((product, i) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>${product.price}</td>
+                  <td>Rs {product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
+
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">

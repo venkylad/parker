@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -130,143 +130,176 @@ const ProductEditScreen = ({ match, history }) => {
     );
   };
 
-  console.log(filter);
-
   return (
-    <>
-      <Link to="/admin/productlist" className="btn btn-light my-3">
-        Go Back
-      </Link>
-      <FormContainer>
-        <h1>Create Parking</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler} className="product_edit_form">
-            <Form.Group controlId="name">
-              <Form.Label>Name of Area (or) Street Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Address Line 1"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+    <Row>
+      <Col>
+        <Link to="/admin/productlist" className="btn btn-light my-3">
+          Go Back
+        </Link>
+        <FormContainer>
+          <h1>Create Parking</h1>
+          <hr />
+          {loadingUpdate && <Loader />}
+          {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <>
+              <Row>
+                <Col sm={12} md={12}>
+                  <Form
+                    onSubmit={submitHandler}
+                    className="login_form_container create_form p-4 m-3"
+                  >
+                    <Button
+                      className="btn btn-lg btn-danger"
+                      onClick={() => setCountInStock(0)}
+                    >
+                      Block
+                    </Button>
+                    <Button
+                      className="btn btn-lg btn-success ml-4"
+                      onClick={() => setCountInStock(12)}
+                    >
+                      Un-Block
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="btn btn-lg btn-primary ml-4"
+                    >
+                      Update
+                    </Button>
+                    <p>
+                      {countInStock === 0
+                        ? "Parking is Blocked or Booked, Now Update it."
+                        : "Parking is Unblocked and it is open for parking Now Update it"}
+                    </p>
+                    <Form.Group controlId="name">
+                      <Form.Label>Name of Area (or) Street Name</Form.Label>
+                      <Form.Control
+                        type="name"
+                        placeholder="Address Line 1"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="category">
-              <Form.Label>Enter Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Address Line 2"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="category">
+                      <Form.Label>Enter Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Address Line 2"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="price">
-              <Form.Label>Price per Hour</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Button className="btn btn-light" onClick={getLocation}>
-              Get Current Latitude and Longitude
-            </Button>
-            <Form.Group controlId="price">
-              <Form.Label>Latitude</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter Latitude"
-                value={lat}
-                onChange={(e) => setLat(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="price">
+                      <Form.Label>Price per Hour</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                    <Button className="btn btn-info" onClick={getLocation}>
+                      Get Current Latitude and Longitude
+                    </Button>
+                    <Form.Group controlId="price">
+                      <Form.Label>Latitude</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Latitude"
+                        value={lat}
+                        onChange={(e) => setLat(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="price">
-              <Form.Label>Longitude</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter Longitude"
-                value={lng}
-                onChange={(e) => setLng(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="price">
+                      <Form.Label>Longitude</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Longitude"
+                        value={lng}
+                        onChange={(e) => setLng(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="image">
-              <Form.Label>Image of Parking</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id="image-file"
-                label="Choose File"
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />}
-            </Form.Group>
+                    <Form.Group controlId="image">
+                      <Form.Label>Image of Parking</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter image url"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                      ></Form.Control>
+                      <Form.File
+                        id="image-file"
+                        label="Choose File"
+                        custom
+                        onChange={uploadFileHandler}
+                      ></Form.File>
+                      {uploading && <Loader />}
+                    </Form.Group>
 
-            <Form.Group controlId="brand">
-              <Form.Label>Name of Parking provider</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Name of Provider"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="brand">
+                      <Form.Label>Name of Parking provider</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Name of Provider"
+                        value={brand}
+                        onChange={(e) => setBrand(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="countInStock">
-              <Form.Label>Hours Permitting</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter countInStock"
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="countInStock">
+                      <Form.Label>Hours Permitting</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter countInStock"
+                        value={countInStock}
+                        onChange={(e) => setCountInStock(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Form.Group controlId="type">
-              <Form.Label>Select Category</Form.Label>
-              <select
-                class="form-control"
-                id="exampleSelect1"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              >
-                <option value="popular">Popular</option>
-                <option value="goodPrice">Good Price</option>
-                <option value="budget">Budget</option>
-              </select>
-            </Form.Group>
+                    <Form.Group controlId="type">
+                      <Form.Label>Select Category</Form.Label>
+                      <select
+                        class="form-control"
+                        id="exampleSelect1"
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                      >
+                        <option value="popular">Popular</option>
+                        <option value="goodPrice">Good Price</option>
+                        <option value="budget">Budget</option>
+                      </select>
+                    </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description or About Parking</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                    <Form.Group controlId="description">
+                      <Form.Label>Description or About Parking</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Update
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
-    </>
+                    <Button type="submit" variant="primary">
+                      Update
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+            </>
+          )}
+        </FormContainer>
+      </Col>
+    </Row>
   );
 };
 

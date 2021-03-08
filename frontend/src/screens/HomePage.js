@@ -38,14 +38,14 @@ const HomePage = ({ match }) => {
 
   const freeParkingIcon = new L.Icon({
     iconUrl: require("../markers/parking.png"),
-    iconSize: [35, 35],
+    iconSize: [30, 30],
     iconAnchor: [17, 45],
     popupAnchor: [4, -46],
   });
 
   const noParkingIcon = new L.Icon({
     iconUrl: require("../markers/noParking.png"),
-    iconSize: [35, 35],
+    iconSize: [30, 30],
     iconAnchor: [17, 45],
     popupAnchor: [4, -46],
   });
@@ -95,10 +95,16 @@ const HomePage = ({ match }) => {
                         icon={markerIcon}
                       >
                         <Popup>
-                          <Link to={`/product/${product._id}`}>
-                            <Card.Img src={product.image} variant="top" />
-                            <p>{product.name}</p>
-                          </Link>
+                          {product.countInStock === 0 ? (
+                            <Card>
+                              <h5>Parking Unavailable</h5>
+                            </Card>
+                          ) : (
+                            <Link to={`/product/${product._id}`}>
+                              <Card.Img src={product.image} variant="top" />
+                              <p>{product.name}</p>
+                            </Link>
+                          )}
                         </Popup>
                       </Marker>
                     </>

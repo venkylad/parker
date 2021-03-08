@@ -32,20 +32,21 @@ const LoginScreen = ({ location, history }) => {
 
   return (
     <Row className="cart_row">
-      <Col md={6} className="d-none d-lg-block login_left_side">
+      <Col lg={3} className="d-none d-lg-block login_left_side">
         <img
           src={SignInImage}
           alt="signInBackgroundImage"
           className="login_image"
         />
-        <h2>Login using Email and password</h2>
+        <h4>Login Using Email & Password.</h4>
       </Col>
-      <Col sm={12} md={12} lg={6} className="login_right_side">
-        <FormContainer className="login_form">
+      <Col sm={12} md={12} lg={9} className="login_right_side">
+        <FormContainer>
           <h1>Sign In</h1>
+          <hr />
           {error && <Message variant="danger">{error}</Message>}
           {loading && <Loader />}
-          <Form onSubmit={submitHandler}>
+          <Form onSubmit={submitHandler} className="login_form_container">
             <Form.Group controlId="email">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -73,12 +74,14 @@ const LoginScreen = ({ location, history }) => {
 
           <Row className="py-3">
             <Col>
-              New Customer?{" "}
-              <Link
-                to={redirect ? `/register?redirect=${redirect}` : "/register"}
-              >
-                Register
-              </Link>
+              <h3>
+                New Customer?{" "}
+                <Link
+                  to={redirect ? `/register?redirect=${redirect}` : "/register"}
+                >
+                  Register
+                </Link>
+              </h3>
             </Col>
           </Row>
         </FormContainer>

@@ -1,6 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const Order = require("../models/orderModel");
 
+const accountSid = "AC1a7ad62d3d5a43690675be2329612851";
+const authToken = "50e9b6217478cecaa128af6dc9fcbd9e";
+const client = require("twilio")(accountSid, authToken);
+
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
@@ -43,11 +47,20 @@ const addOrderItems = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     "user",
-    "name email"
+    "name email phone"
   );
 
   if (order) {
     res.json(order);
+    // client.messages
+    //   .create({
+    //     body:
+    //       "Your Parking Area will be rented once the payment is completed use card or UPI. if payment is completed please ignore it. \n --PARKER",
+    //     from: "whatsapp:+14155238886",
+    //     to: `whatsapp:+91${req.user.phone}`,
+    //   })
+    //   .then((message) => console.log(message.sid))
+    //   .done();
   } else {
     res.status(404);
     throw new Error("Order not found");
@@ -77,6 +90,15 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Order not found");
   }
+
+  client.messages
+    .create({
+      body: `Hello ${req.user.name}, Your Parking Area is booked --PARKER`,
+      from: "whatsapp:+14155238886",
+      to: `whatsapp:+91${req.user.phone}`,
+    })
+    .then((message) => console.log(message.sid))
+    .done();
 });
 
 // @desc    Update order to delivered
@@ -90,6 +112,15 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
     order.deliveredAt = Date.now();
 
     const updatedOrder = await order.save();
+
+    client.messages
+      .create({
+        body: `Hello ${req.user.name}, We Received your payment, Your Parking Area is booked --PARKER`,
+        from: "whatsapp:+14155238886",
+        to: `whatsapp:+91${req.user.phone}`,
+      })
+      .then((message) => console.log(message.sid))
+      .done();
 
     res.json(updatedOrder);
   } else {

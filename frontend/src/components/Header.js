@@ -73,7 +73,7 @@ const Header = () => {
                 </LinkContainer>
               )}
               {userInfo && user && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
+                <NavDropdown title="Provider" id="adminmenu">
                   {userInfo.isProvider && (
                     <LinkContainer to="/admin/userlist">
                       <NavDropdown.Item>Users</NavDropdown.Item>
@@ -82,6 +82,7 @@ const Header = () => {
                   <LinkContainer to="/admin/productlist">
                     <NavDropdown.Item>Parks / Add Parks</NavDropdown.Item>
                   </LinkContainer>
+
                   <LinkContainer to="/admin/orderlist">
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer>

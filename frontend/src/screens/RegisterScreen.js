@@ -10,6 +10,7 @@ import SignUpImage from "../markers/signUpBackground.png";
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,30 +34,31 @@ const RegisterScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password, phone));
     }
   };
 
   return (
     <main>
       <Row className="cart_row">
-        <Col md={6} className="d-none d-lg-block login_left_side">
+        <Col lg={3} className="d-none d-lg-block login_left_side">
           <img
             src={SignUpImage}
             alt="signInBackgroundImage"
             className="login_image"
           />
-          <h2>
+          <h4>
             Register, Its free <br /> Thanks for choosing us.
-          </h2>
+          </h4>
         </Col>
-        <Col sm={12} md={12} lg={6} className="login_right_side">
+        <Col sm={12} md={12} lg={9} className="login_right_side">
           <FormContainer>
             <h1>Sign Up</h1>
+            <hr />
             {message && <Message variant="danger">{message}</Message>}
             {error && <Message variant="danger">{error}</Message>}
             {loading && <Loader />}
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler} className="login_form_container">
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -64,6 +66,16 @@ const RegisterScreen = ({ location, history }) => {
                   placeholder="Enter name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="number">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Phone Number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
@@ -104,10 +116,14 @@ const RegisterScreen = ({ location, history }) => {
 
             <Row className="py-3">
               <Col>
-                Have an Account?{" "}
-                <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                  Login
-                </Link>
+                <h3>
+                  Have an Account?{" "}
+                  <Link
+                    to={redirect ? `/login?redirect=${redirect}` : "/login"}
+                  >
+                    Login
+                  </Link>
+                </h3>
               </Col>
             </Row>
           </FormContainer>

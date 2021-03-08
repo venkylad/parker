@@ -39,25 +39,21 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <Row className="cart_row">
-      <Col md={6} className="d-none d-lg-block cart_left_side">
-        <h1 className="cart_left_side_heading">Parker</h1>
+      <Col lg={3} className="d-none d-lg-block cart_left_side">
+        <h3 className="cart_left_side_heading">Parker</h3>
         <br />
-        <h2 className="cart_left_side_subheading">
-          I was complimented on my Driving today.
-          <br /> Someone left a note on my windshield that said "PARKING FINE"
-        </h2>
+        <h4 className="cart_left_side_subheading">
+          I was complimented on my Driving today. Someone left a note on my
+          windshield that said "PARKING FINE"
+        </h4>
       </Col>
-      <Col sm={12} md={12} lg={6} className="cart_right_side">
-        <Row>
+      <Col sm={12} md={12} lg={9} className="cart_right_side">
+        <Row className="mt-4">
           <Col md={12}>
             <Card>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h2>
-                    Sub-total for (
-                    {cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                    Hour(s) Parking
-                  </h2>
+                  <h2>Sub-total</h2>
                   INR{" "}
                   {cartItems
                     .reduce((acc, item) => acc + item.qty * item.price, 0)

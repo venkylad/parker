@@ -93,8 +93,7 @@ const OrderScreen = ({ match, history }) => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
-      <h1>Order {order._id}</h1>
-      <Row>
+      <Row className="my-3">
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
@@ -107,10 +106,13 @@ const OrderScreen = ({ match, history }) => {
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
+                <strong>Phone: </strong> +91 {order.user.phone}
+              </p>
+              <p>
                 <strong>User Details:</strong>
                 <hr />
                 <p>
-                  <strong>Name</strong>: {order.shippingAddress.address}
+                  <strong>Vehicle Name</strong>: {order.shippingAddress.address}
                 </p>
                 <p>
                   <strong>Mobile Number</strong>: {order.shippingAddress.city}
@@ -198,12 +200,7 @@ const OrderScreen = ({ match, history }) => {
                   <Col>{order.itemsPrice} Rs</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>{order.shippingPrice} Rs</Col>
-                </Row>
-              </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>

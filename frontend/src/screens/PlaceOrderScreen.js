@@ -65,14 +65,14 @@ const PlaceOrderScreen = ({ history }) => {
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
-          <ListGroup variant="flush" className="product_order_form">
+          <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Verify Your Details</h2>
               <p>
                 <strong>User Details:</strong>
                 <hr />
                 <p>
-                  <strong>Name:</strong> {cart.shippingAddress.address}
+                  <strong>Vehicle Name:</strong> {cart.shippingAddress.address}
                 </p>
                 <p>
                   <strong>Mobile Number:</strong> {cart.shippingAddress.city}
@@ -128,7 +128,7 @@ const PlaceOrderScreen = ({ history }) => {
           </ListGroup>
         </Col>
         <Col md={4}>
-          <Card className="product_order_form">
+          <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>Order Summary</h2>

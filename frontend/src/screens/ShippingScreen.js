@@ -26,9 +26,10 @@ const ShippingScreen = ({ history }) => {
     <FormContainer>
       <CheckoutSteps step1 step2 />
       <h1>Enter Details To Proceed</h1>
-      <Form onSubmit={submitHandler}>
+      <hr />
+      <Form onSubmit={submitHandler} className="login_form_container my-3">
         <Form.Group controlId="address">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Vehicle Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter Name"

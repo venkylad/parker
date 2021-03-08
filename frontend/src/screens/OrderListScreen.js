@@ -17,8 +17,8 @@ const OrderListScreen = ({ history }) => {
 
   console.log(orders);
 
-  // const providerOrders =
-  //   orders && orders.filter((order) => order.user._id === userInfo._id);
+  const providerOrders =
+    orders && orders.filter((order) => order.user._id === userInfo._id);
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -36,7 +36,13 @@ const OrderListScreen = ({ history }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className="table-sm">
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="table-md table-dark"
+        >
           <thead>
             <tr>
               <th>ID</th>
@@ -49,12 +55,12 @@ const OrderListScreen = ({ history }) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {providerOrders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>${order.totalPrice}</td>
+                <td>Rs {order.totalPrice}</td>
                 <td>
                   {order.isPaid ? (
                     order.paidAt.substring(0, 10)
