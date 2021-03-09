@@ -121,6 +121,10 @@ const CartScreen = ({ match, location, history }) => {
               </ListGroup>
             )}
           </Col>
+          <h5 className="m-4">
+            Use Coupon <strong>freePARK</strong> for first time registered users
+            to get 40% discount.
+          </h5>
         </Row>
       </Col>
     </Row>
