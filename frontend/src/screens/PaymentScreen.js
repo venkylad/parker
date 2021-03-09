@@ -49,6 +49,14 @@ const PaymentScreen = ({ history }) => {
               value="Stripe"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
+            <Form.Check
+              type="radio"
+              label="Google pay"
+              id="GooglePay"
+              name="paymentMethod"
+              value="GooglePay"
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
           </Col>
         </Form.Group>
 

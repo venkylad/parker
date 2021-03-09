@@ -17,6 +17,7 @@ import {
 } from "../constants/orderConstants";
 import { listProductDetails } from "../actions/productActions";
 import StripeButton from "../components/StripeButton";
+import Googlepay from "../components/Googlepay";
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
@@ -185,10 +186,6 @@ const OrderScreen = ({ match, history }) => {
                           </Col>
                         </Row>
                       </ListGroup.Item>
-                      <h3 className="blockquote">
-                        {order.shippingAddress.address}, Parking is going to be
-                        rented for {item.qty} hour(s).
-                      </h3>
                     </>
                   ))}
                 </ListGroup>
@@ -234,7 +231,7 @@ const OrderScreen = ({ match, history }) => {
                       onChange={(e) => setCoupon(e.target.value)}
                     />
                     <Button
-                      className="btn btn-sm btn-outline-primary"
+                      className="btn-sm btn-outline"
                       onClick={handleApplyCoupon}
                     >
                       Apply
@@ -267,10 +264,18 @@ const OrderScreen = ({ match, history }) => {
               )}
               {!order.isPaid && (
                 <ListGroup.Item style={{ textAlign: "center" }}>
-                  <h3 className="text-muted">
+                  <h4 className="text-muted">
                     <i>STRIPE </i> Card payments
-                  </h3>
+                  </h4>
                   <StripeButton
+                    price={couponPrice === 0 ? order.totalPrice : couponPrice}
+                  />
+                </ListGroup.Item>
+              )}
+              {!order.isPaid && (
+                <ListGroup.Item style={{ textAlign: "center" }}>
+                  <h4 className="text-muted">Google pay</h4>
+                  <Googlepay
                     price={couponPrice === 0 ? order.totalPrice : couponPrice}
                   />
                 </ListGroup.Item>
