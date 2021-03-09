@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Order = require("../models/orderModel");
 
 const accountSid = "AC1a7ad62d3d5a43690675be2329612851";
-const authToken = "50e9b6217478cecaa128af6dc9fcbd9e";
+const authToken = "a90744f21be118a1cb87a4b86e52a945";
 const client = require("twilio")(accountSid, authToken);
 
 // @desc    Create new order

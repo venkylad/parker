@@ -22,6 +22,8 @@ const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
 
   const [sdkReady, setSdkReady] = useState(false);
+  const [coupon, setCoupon] = useState("");
+  const [couponPrice, setCouponPrice] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -85,6 +87,12 @@ const OrderScreen = ({ match, history }) => {
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order));
+  };
+
+  const handleApplyCoupon = () => {
+    if (coupon === "firstPARK") {
+      setCouponPrice(Math.round(order.totalPrice / 1.66));
+    }
   };
 
   return loading ? (
@@ -207,10 +215,38 @@ const OrderScreen = ({ match, history }) => {
                   <Col>{order.taxPrice} Rs</Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>INR {order.totalPrice}</Col>
+                  <Col>
+                    INR {couponPrice === 0 ? order.totalPrice : couponPrice}
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col sm={4}>Use Coupons.</Col>
+                  <Col sm={8}>
+                    <input
+                      type="text"
+                      value={coupon}
+                      onChange={(e) => setCoupon(e.target.value)}
+                    />
+                    <Button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={handleApplyCoupon}
+                    >
+                      Apply
+                    </Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="text-center">
+                    {coupon !== "firstPARK"
+                      ? "Coupon Invalid"
+                      : "Coupon is valid please click apply to verify"}
+                  </Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
@@ -220,7 +256,10 @@ const OrderScreen = ({ match, history }) => {
                     <Loader />
                   ) : (
                     <PayPalButton
-                      amount={Number(order.totalPrice / 73.6).toFixed(2)}
+                      amount={Number(
+                        (couponPrice === 0 ? order.totalPrice : couponPrice) /
+                          73.6
+                      ).toFixed(2)}
                       onSuccess={successPaymentHandler}
                     />
                   )}
@@ -231,7 +270,9 @@ const OrderScreen = ({ match, history }) => {
                   <h3 className="text-muted">
                     <i>STRIPE </i> Card payments
                   </h3>
-                  <StripeButton price={order.totalPrice} />
+                  <StripeButton
+                    price={couponPrice === 0 ? order.totalPrice : couponPrice}
+                  />
                 </ListGroup.Item>
               )}
               {loadingDeliver && <Loader />}
@@ -245,7 +286,7 @@ const OrderScreen = ({ match, history }) => {
                       className="btn btn-block"
                       onClick={deliverHandler}
                     >
-                      Mark As Delivered
+                      Provider set Booked
                     </Button>
                   </ListGroup.Item>
                 )}
