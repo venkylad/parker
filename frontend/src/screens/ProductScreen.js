@@ -20,6 +20,8 @@ import {
   createProductReview,
 } from "../actions/productActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+import TransSide from "../components/TransSide";
+import Trans from "../components/Trans";
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
@@ -80,151 +82,158 @@ const ProductScreen = ({ history, match }) => {
           {/* <Meta title={product.name} /> */}
           <Row>
             <Col md={6} className="list_item">
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  {product.filter ? (
-                    <h4 className="badge badge-warning h3">
-                      {" "}
-                      {product.filter.toUpperCase()}
-                    </h4>
-                  ) : (
-                    ""
-                  )}
-                  <h3>{product.name}</h3>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Rating
-                    value={product.rating}
-                    text={`${product.numReviews} reviews`}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Price</strong>: {product.price} Rs
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Provider</strong>: {product.brand}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Description</strong>: {product.description}
-                </ListGroup.Item>
-              </ListGroup>
-
-              <Card className="my-2">
+              <TransSide inX="100%">
                 <ListGroup variant="flush">
                   <ListGroup.Item>
-                    <Row>
-                      <Col>Price:</Col>
-                      <Col>
-                        <strong>{product.price} Rs</strong>
-                      </Col>
-                    </Row>
+                    {product.filter ? (
+                      <h4 className="badge badge-warning h3">
+                        {" "}
+                        {product.filter.toUpperCase()}
+                      </h4>
+                    ) : (
+                      ""
+                    )}
+                    <h3>{product.name}</h3>
                   </ListGroup.Item>
-
                   <ListGroup.Item>
-                    <Row>
-                      <Col>Status:</Col>
-                      <Col>
-                        {product.countInStock > 0
-                          ? "Available"
-                          : "Not Available"}
-                      </Col>
-                    </Row>
+                    <Rating
+                      value={product.rating}
+                      text={`${product.numReviews} reviews`}
+                    />
                   </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Price</strong>: {product.price} Rs
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Provider</strong>: {product.brand}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Description</strong>: {product.description}
+                  </ListGroup.Item>
+                </ListGroup>
 
-                  {product.countInStock > 0 && (
+                <Card className="my-2">
+                  <ListGroup variant="flush">
                     <ListGroup.Item>
                       <Row>
-                        <Col>Hours Required:</Col>
+                        <Col>Price:</Col>
                         <Col>
-                          <Form.Control
-                            as="select"
-                            value={qty}
-                            onChange={(e) => setQty(e.target.value)}
-                          >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
-                          </Form.Control>
+                          <strong>{product.price} Rs</strong>
                         </Col>
                       </Row>
                     </ListGroup.Item>
-                  )}
 
-                  <ListGroup.Item>
-                    <Button
-                      onClick={addToCartHandler}
-                      className="btn-block btn-dark common_btn"
-                      type="button"
-                      disabled={product.countInStock === 0}
-                    >
-                      Proceed
-                    </Button>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Status:</Col>
+                        <Col>
+                          {product.countInStock > 0
+                            ? "Available"
+                            : "Not Available"}
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+
+                    {product.countInStock > 0 && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Hours Required:</Col>
+                          <Col>
+                            <Form.Control
+                              as="select"
+                              value={qty}
+                              onChange={(e) => setQty(e.target.value)}
+                            >
+                              {[...Array(product.countInStock).keys()].map(
+                                (x) => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                )
+                              )}
+                            </Form.Control>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    )}
+
+                    <ListGroup.Item>
+                      <Button
+                        onClick={addToCartHandler}
+                        className="btn-block btn-dark common_btn"
+                        type="button"
+                        disabled={product.countInStock === 0}
+                      >
+                        Proceed
+                      </Button>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card>
+              </TransSide>
             </Col>
 
             <Col md={6}>
-              {product.filter ? (
-                <span
-                  style={{
-                    position: "absolute",
-                    right: "20px",
-                    top: "10px",
-                  }}
-                  className="badge badge-warning h3"
+              <TransSide inX="-100%">
+                {product.filter ? (
+                  <span
+                    style={{
+                      position: "absolute",
+                      right: "20px",
+                      top: "10px",
+                    }}
+                    className="badge badge-warning h3"
+                  >
+                    {" "}
+                    {product.filter.toUpperCase()}
+                  </span>
+                ) : (
+                  ""
+                )}
+
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fluid
+                  className="product_image"
+                />
+                <Button
+                  className="btn btn-light btn-lg btn-block"
+                  target="_blank"
+                  href={`http://maps.google.com/?q=${product.lat},${product.lng}`}
                 >
-                  {" "}
-                  {product.filter.toUpperCase()}
-                </span>
-              ) : (
-                ""
-              )}
-              <Image
-                src={product.image}
-                alt={product.name}
-                fluid
-                className="product_image"
-              />
-              <Button
-                className="btn btn-light btn-lg btn-block"
-                target="_blank"
-                href={`http://maps.google.com/?q=${product.lat},${product.lng}`}
-              >
-                <i className="fas fa-location-arrow"> </i>
-                {"  "}
-                Get Directions
-              </Button>
+                  <i className="fas fa-location-arrow"> </i>
+                  {"  "}
+                  Get Directions
+                </Button>
+              </TransSide>
             </Col>
           </Row>
           <Row className="my-2">
             <Col md={6}>
-              {product.lat && product.lng && (
-                <MapContainer
-                  className="map_box"
-                  center={{ lat: product.lat, lng: product.lng }}
-                  scrollWheelZoom={false}
-                  zoom={25}
-                  style={{
-                    margin: 0,
-                    padding: 0,
-                  }}
-                >
-                  <TileLayer url="https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=LO8Ma6cWRDbfY6C4HXDM" />
-                  {/* <LocationMarker /> */}
-
-                  <Marker
-                    color="red"
-                    position={{ lat: product.lat, lng: product.lng }}
+              <Trans>
+                {product.lat && product.lng && (
+                  <MapContainer
+                    className="map_box"
+                    center={{ lat: product.lat, lng: product.lng }}
+                    scrollWheelZoom={false}
+                    zoom={25}
+                    style={{
+                      margin: 0,
+                      padding: 0,
+                    }}
                   >
-                    <Popup>{product.name}</Popup>
-                  </Marker>
-                </MapContainer>
-              )}
+                    <TileLayer url="https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=LO8Ma6cWRDbfY6C4HXDM" />
+                    {/* <LocationMarker /> */}
+
+                    <Marker
+                      color="red"
+                      position={{ lat: product.lat, lng: product.lng }}
+                    >
+                      <Popup>{product.name}</Popup>
+                    </Marker>
+                  </MapContainer>
+                )}
+              </Trans>
             </Col>
             <Col md={6}>
               <h2>Reviews</h2>

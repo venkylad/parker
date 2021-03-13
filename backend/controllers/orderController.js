@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Order = require("../models/orderModel");
 
 const accountSid = "AC1a7ad62d3d5a43690675be2329612851";
-const authToken = "a90744f21be118a1cb87a4b86e52a945";
+const authToken = `${process.env.TWILIO_AUTH_TOKEN}`;
 const client = require("twilio")(accountSid, authToken);
 
 // @desc    Create new order
@@ -93,7 +93,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
   client.messages
     .create({
-      body: `Hello ${req.user.name}, Your Parking Area is booked --PARKER`,
+      body: `Hello ${req.user.name}, Your Parking Area is booked and please wait for another confirmation message --PARKER`,
       from: "whatsapp:+14155238886",
       to: `whatsapp:+91${req.user.phone}`,
     })

@@ -21,6 +21,8 @@ import OrderListScreen from "./screens/OrderListScreen";
 import HomePage from "./screens/HomePage";
 import Home from "./screens/Home";
 
+import { AnimatePresence } from "framer-motion";
+
 const App = () => {
   return (
     <Router>

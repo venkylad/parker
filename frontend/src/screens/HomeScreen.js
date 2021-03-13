@@ -9,6 +9,8 @@ import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
 import { listProducts } from "../actions/productActions";
 import introImage from "../markers/cash.png";
+import Trans from "../components/Trans";
+import TransSide from "../components/TransSide";
 
 const HomeScreen = ({ match }) => {
   const [type, setType] = useState("popular");
@@ -38,18 +40,20 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
-      <Row className="homepage_row">
-        <Col xs={12} sm={9} className="homepage_text_col">
-          <div className="homepage_intro_text">
-            <h1>Budget Friendly.</h1>
-            <p className="homepage_intro_subtext">
-              Filter Available Parker's safe-parking depending on your budget
-              and area
-            </p>
-          </div>
-        </Col>
-        <Col xs={12} sm={3}></Col>
-      </Row>
+      <Trans>
+        <Row className="homepage_row">
+          <Col xs={12} sm={9} className="homepage_text_col">
+            <div className="homepage_intro_text">
+              <h1>Budget Friendly.</h1>
+              <p className="homepage_intro_subtext">
+                Filter Available Parker's safe-parking depending on your budget
+                and area
+              </p>
+            </div>
+          </Col>
+          <Col xs={12} sm={3}></Col>
+        </Row>
+      </Trans>
       {!keyword ? (
         <h2 className="filter_text">
           Need Parking in your budget? Filter them out

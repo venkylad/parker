@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { login } from "../actions/userActions";
 import SignInImage from "../markers/signInBackground.png";
+import TransSide from "../components/TransSide";
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
@@ -33,58 +34,64 @@ const LoginScreen = ({ location, history }) => {
   return (
     <Row className="cart_row">
       <Col lg={3} className="d-none d-lg-block login_left_side">
-        <img
-          src={SignInImage}
-          alt="signInBackgroundImage"
-          className="login_image"
-        />
-        <h4>Login Using Email & Password.</h4>
+        <TransSide inX="-100%">
+          <img
+            src={SignInImage}
+            alt="signInBackgroundImage"
+            className="login_image"
+          />
+          <h4>Login Using Email & Password.</h4>
+        </TransSide>
       </Col>
       <Col sm={12} md={12} lg={9} className="login_right_side">
-        <FormContainer>
-          <h1>Sign In</h1>
-          <hr />
-          {error && <Message variant="danger">{error}</Message>}
-          {loading && <Loader />}
-          <Form onSubmit={submitHandler} className="login_form_container">
-            <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+        <TransSide inX="100%">
+          <FormContainer>
+            <h1>Sign In</h1>
+            <hr />
+            {error && <Message variant="danger">{error}</Message>}
+            {loading && <Loader />}
+            <Form onSubmit={submitHandler} className="login_form_container">
+              <Form.Group controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Sign In
-            </Button>
-          </Form>
+              <Button type="submit" variant="primary">
+                Sign In
+              </Button>
+            </Form>
 
-          <Row className="py-3">
-            <Col>
-              <h3>
-                New Customer?{" "}
-                <Link
-                  to={redirect ? `/register?redirect=${redirect}` : "/register"}
-                >
-                  Register
-                </Link>
-              </h3>
-            </Col>
-          </Row>
-        </FormContainer>
+            <Row className="py-3">
+              <Col>
+                <h3>
+                  New Customer?{" "}
+                  <Link
+                    to={
+                      redirect ? `/register?redirect=${redirect}` : "/register"
+                    }
+                  >
+                    Register
+                  </Link>
+                </h3>
+              </Col>
+            </Row>
+          </FormContainer>
+        </TransSide>
       </Col>
     </Row>
   );

@@ -18,6 +18,8 @@ import noParkingImage from "../markers/homePage2.png";
 import creditCardImage from "../markers/homePage3.png";
 import maps from "../markers/towtruck2.png";
 import CurrentLoc from "../components/CurrentLoc";
+import { motion } from "framer-motion";
+import Trans from "../components/Trans";
 
 const HomePage = ({ match }) => {
   const keyword = match.params.keyword;
@@ -56,29 +58,32 @@ const HomePage = ({ match }) => {
 
   return (
     <>
-      <Row className="homepage_row">
-        <Col xs={12} sm={9} className="homepage_text_col">
-          <div className="homepage_text">
-            <h1 className="homepage_intro_text">Welcome parker !</h1>
-            <h2 className="homepage_intro_subtext">
-              Be a very firm believer in Karma and put in this way. you will get
-              a lot of good parking spots
-            </h2>
-          </div>
-        </Col>
-        <Col xs={12} sm={3}></Col>
-      </Row>
+      <Trans>
+        <Row className="homepage_row">
+          <Col xs={12} sm={9} className="homepage_text_col">
+            <div className="homepage_text">
+              <h1 className="homepage_intro_text">Welcome parker !</h1>
+              <h2 className="homepage_intro_subtext">
+                Be a very firm believer in Karma and put in this way. you will
+                get a lot of good parking spots
+              </h2>
+            </div>
+          </Col>
+          <Col xs={12} sm={3}></Col>
+        </Row>
 
-      <Row className="homepage_row">
-        <Col xs={12} sm={3}></Col>
-        <Col xs={12} sm={9} className="homepage_text_col">
-          <div className="homepage_text">
-            <h3>
-              Search Parker's safe parkings & Free-parkings nearby your location
-            </h3>
-          </div>
-        </Col>
-      </Row>
+        <Row className="homepage_row">
+          <Col xs={12} sm={3}></Col>
+          <Col xs={12} sm={9} className="homepage_text_col">
+            <div className="homepage_text">
+              <h3>
+                Search Parker's safe parkings & Free-parkings nearby your
+                location
+              </h3>
+            </div>
+          </Col>
+        </Row>
+      </Trans>
 
       <Row>
         <Col sm={12} md={12}>
